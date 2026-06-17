@@ -21,7 +21,7 @@ public class LeitorCSV {
         carregaCompanhias(cias);
         carregaAeronaves(aeronaves);
         carregaAeroportos(aerodromos);
-        carregaVoos(voos);
+        carregaVoos(voos, g);
         g.setAeroportos(aeroportos);
     }
 
@@ -100,7 +100,7 @@ public class LeitorCSV {
         return aeroportos;
     }
 
-    public static void carregaVoos(String arquivo) throws IOException {
+    public static void carregaVoos(String arquivo, Grafo g) throws IOException {
 
         BufferedReader br = new BufferedReader(new FileReader(arquivo));
 
@@ -168,6 +168,7 @@ public class LeitorCSV {
                     duracao
             );
 
+            destino.setGrauEntrada(destino.getGrauEntrada()+1);
 
             origem.addVoo(voo);
         }

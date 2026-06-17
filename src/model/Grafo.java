@@ -3,8 +3,7 @@ package model;
 import auxiliares.LeitorCSV;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class Grafo {
     private Map<String, Aeroporto> aeroportos;
@@ -20,5 +19,9 @@ public class Grafo {
 
     public void setAeroportos(Map<String, Aeroporto> aeroportos) {
         this.aeroportos = aeroportos;
+    }
+
+    public List<Aeroporto> getTop5Graus() {
+        return aeroportos.values().stream().sorted(Comparator.comparing(Aeroporto::getGrauTotal).reversed()).limit(5).toList();
     }
 }

@@ -13,7 +13,12 @@ public class Main {
                 "C:\\Users\\dinho\\IdeaProjects\\t2-alest-eu\\src\\T2_Dados\\cias.csv",
                 "C:\\Users\\dinho\\IdeaProjects\\t2-alest-eu\\src\\T2_Dados\\voos_mar2026.csv");
 
-
+        g.getTop5Graus().forEach(a -> System.out.println(a.getCodigo() + " -> " + a.getGrauTotal()));
+        for (Aeroporto a : g.getAeroportos().values()){
+            if (a.getGrauEntrada() > 0){
+                System.out.println(a.getCodigo() + " -> Entrada: " + a.getGrauEntrada() + " Saida: " + a.getGrauSaida() + " Total: " + a.getGrauTotal());
+            }
+        }
     }
 
 
