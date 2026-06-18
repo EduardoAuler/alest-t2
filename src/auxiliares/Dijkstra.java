@@ -2,8 +2,10 @@ package auxiliares;
 
 import model.Aeroporto;
 import model.Grafo;
+import model.RespostaDijkstra;
 import model.Voo;
 
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.*;
 
@@ -44,6 +46,12 @@ public class Dijkstra {
             String destinoCodigo,
             LocalDateTime inicio,
             String aeroportoFechadoCodigo) {
+
+        // verifica se o aeroporto de origem ou o de destino estão fechados
+        if (origemCodigo.equals(aeroportoFechadoCodigo) || destinoCodigo.equals(aeroportoFechadoCodigo)) {
+            return Collections.emptyList(); 
+        }
+
         Aeroporto origem = findAeroportoByCodigo(origemCodigo);
         Aeroporto destino = findAeroportoByCodigo(destinoCodigo);
         Aeroporto aeroportoFechado = findAeroportoByCodigo(aeroportoFechadoCodigo);
@@ -88,7 +96,7 @@ public class Dijkstra {
 
                 // aeroporto fechado
                 if (aeroportoFechado != null &&
-                        prox.equals(aeroportoFechado))
+                        prox.equals(aeroportoFechado) || voo.getOrigem().equals(aeroportoFechado))
                     continue;
 
                 LocalDateTime horarioDisponivel =
@@ -180,6 +188,28 @@ public class Dijkstra {
 
     private Aeroporto findAeroportoByCodigo(String codigo){
         return grafo.getAeroportos().get(codigo);
+    }
+
+    public RespostaDijkstra obterRelatorio(List<Voo> voos){
+        if (voos.isEmpty()) return null;
+
+        Map<String, Integer> tempoNoAeroporto = new HashMap<>();
+
+        // calcula o tempo total do primeiro voo até a chegada
+        LocalDateTime inicioJornada = voos.get(0).getPartida();
+        LocalDateTime fimJornada = voos.get(voos.size() - 1).getChegada();
+        Duration tempoTotal = Duration.between(inicioJornada, fimJornada);
+
+        // calcula o tempo total no solo
+        for(int i = 0; i <voos.size() - 1; i++){
+                Voo vooAtual = voos.get(i);
+                Voo proximoVoo = voos.get(i+1);
+
+                long minutosEmSolo = Duration.between(vooAtual.getChegada(), proximoVoo.getPartida()).toMinutes();
+                tempoNoAeroporto.put(vooAtual.getDestino().getCodigo(), (int) minutosEmSolo);
+        }
+
+        return new RespostaDijkstra(voos, tempoNoAeroporto, tempoTotal);
     }
 
 }

@@ -6,10 +6,9 @@ import java.util.Map;
 
 public class RespostaDijkstra {
 
-    List<Voo> voos;
-    Map<String, Integer> tempoNoAeroporto;
-    Duration tempoTotal;
-
+    public List<Voo> voos;
+    public Map<String, Integer> tempoNoAeroporto;
+    public Duration tempoTotal;
 
     public RespostaDijkstra(List<Voo> voos, Map<String, Integer> tempoNoAeroporto, Duration tempoTotal) {
         this.voos = voos;
