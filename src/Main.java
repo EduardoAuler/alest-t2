@@ -1,24 +1,25 @@
+import auxiliares.Dijkstra;
 import auxiliares.LeitorCSV;
 import model.Aeroporto;
 import model.Grafo;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 
 
 public class Main {
 
     public static void main(String[] args) throws IOException {
-        Grafo g = new Grafo("C:\\Users\\dinho\\IdeaProjects\\t2-alest-eu\\src\\T2_Dados\\aerodromos.csv",
-                "C:\\Users\\dinho\\IdeaProjects\\t2-alest-eu\\src\\T2_Dados\\aeronaves.csv",
-                "C:\\Users\\dinho\\IdeaProjects\\t2-alest-eu\\src\\T2_Dados\\cias.csv",
-                "C:\\Users\\dinho\\IdeaProjects\\t2-alest-eu\\src\\T2_Dados\\voos_mar2026.csv");
+        Grafo g = new Grafo("C:\\Users\\dinho\\Downloads\\Alest2\\alest-t2\\src\\T2_Dados\\aerodromos.csv",
+                "C:\\Users\\dinho\\Downloads\\Alest2\\alest-t2\\src\\T2_Dados\\aeronaves.csv",
+                "C:\\Users\\dinho\\Downloads\\Alest2\\alest-t2\\src\\T2_Dados\\cias.csv",
+                "C:\\Users\\dinho\\Downloads\\Alest2\\alest-t2\\src\\T2_Dados\\voos_mar2026.csv");
 
-        g.getTop5Graus().forEach(a -> System.out.println(a.getCodigo() + " -> " + a.getGrauTotal()));
-        for (Aeroporto a : g.getAeroportos().values()){
-            if (a.getGrauEntrada() > 0){
-                System.out.println(a.getCodigo() + " -> Entrada: " + a.getGrauEntrada() + " Saida: " + a.getGrauSaida() + " Total: " + a.getGrauTotal());
-            }
-        }
+        Dijkstra d = new Dijkstra(g);
+
+
+
+        System.out.println(d.menorCaminho("KMCO", "KMEM", LocalDateTime.of(2026, 3, 3, 12,0), "SBKP"));
     }
 
 

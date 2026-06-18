@@ -63,11 +63,7 @@ public class Voo {
 
     @Override
     public String toString() {
-        return "Voo{" +
-                ", partida=" + partida +
-                ", chegada=" + chegada +
-                ", companhia=" + companhia +
-                ", duracao=" + duracao +
-                '}';
+        return "Voo-> numero: " + numero + " origem: " + origem.getCodigo() + " destino: " + destino.getCodigo()
+                + " partida: " + partida + " chegada: " + chegada + " duracao: " + duracao;
     }
 }
